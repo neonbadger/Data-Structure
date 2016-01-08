@@ -26,6 +26,8 @@ def unique_houses(filename):
 
     houses = set(all_houses)
 
+    data_file.close()
+
     # Code goes here
 
     return houses
@@ -35,7 +37,7 @@ def sort_by_cohort(filename):
     """TODO: Sort students by cohort.
 
     Iterates over the data to create a list for each cohort, ordering students
-    alphabetically by first name and tas separately. Returns list of lists.
+    alphabetically by first name, and have a list for tas separately. Returns list of lists.
 
         ex. winter_15 = ["alice tsao", "amanda gilmore", "anne vetto", "..." ]
         ex. all_students = [winter_15, spring_15, summer_15, tas]
@@ -49,6 +51,36 @@ def sort_by_cohort(filename):
     tas = []
 
     # Code goes here
+
+    data_file = open(filename)
+
+    for line in data_file:
+        line = line.rstrip()
+        personal_info = line.split('|')
+        name = " ".join(personal_info[:2])
+
+        if personal_info[4] == "Winter 2015":
+            winter_15.append(name)
+        elif personal_info[4] == "Spring 2015":
+            spring_15.append(name)
+        elif personal_info[4] == "Summer 2015":
+            summer_15.append(name)
+        elif personal_info[4] == "TA":
+            tas.append(name)
+
+    winter_15.sort()
+    spring_15.sort()
+    summer_15.sort()
+    tas.sort()
+
+    all_students = [winter_15, spring_15, summer_15, tas]
+
+    print "winter 15 cohort", winter_15
+    print "sprint 15 cohort", spring_15
+    print "summer 15 cohort", summer_15
+    print "TAs", tas
+
+    data_file.close()
 
     return all_students
 
@@ -83,7 +115,65 @@ def students_by_house(filename):
     tas = []
     instructors = []
 
+    
     # Code goes here
+    data_file = open(filename)
+    for line in data_file:
+        line = line.rstrip()
+        personal_info = line.split('|')
+        if personal_info[2] == 'Gryffindor':
+            gryffindor.append(personal_info[1])
+
+        elif personal_info[2] == 'Hufflepuff':
+            hufflepuff.append(personal_info[1])
+
+        elif personal_info[2] == 'Slytherin':
+            slytherin.append(personal_info[1])
+
+        elif personal_info[2] == 'Ravenclaw':
+            ravenclaw.append(personal_info[1])
+
+        elif personal_info[2] == "Dumbledore's Army":
+            dumbledores_army.append(personal_info[1])
+
+        elif personal_info[2] == 'Order of the Phoenix':
+            order_of_the_phoenix.append(personal_info[1])
+
+        elif personal_info[4] == 'TA':
+            tas.append(personal_info[1])
+
+        elif personal_info[4] == 'I':
+            instructors.append(personal_info[1])
+
+    gryffindor.sort()
+    slytherin.sort()
+    order_of_the_phoenix.sort()
+    hufflepuff.sort()
+    ravenclaw.sort()
+    dumbledores_army.sort()
+    tas.sort()
+    instructors.sort()
+
+    all_students = [hufflepuff,
+                    gryffindor,
+                    ravenclaw,
+                    slytherin,
+                    dumbledores_army,
+                    order_of_the_phoenix,
+                    tas,
+                    instructors]
+
+    print "Hufflepuff", hufflepuff
+    print "Gryffindor", gryffindor
+    print "Ravenclaw", ravenclaw
+    print "Slytherin", slytherin
+    print "Dumbledore's Army", dumbledores_army
+    print "Order of the Phoenix", order_of_the_phoenix
+    print "TAs", tas
+    print "Instructors", instructors
+
+
+    data_file.close()
 
     return all_students
 
@@ -102,7 +192,24 @@ def all_students_tuple_list(filename):
 
     student_list = []
 
+    data_file = open(filename)
+
+    for line in data_file:
+        line = line.rstrip()
+        personal_info = line.split("|")
+
+        if personal_info[2]:
+            name = " ".join(personal_info[:2])
+            house = personal_info[2]
+            advisor = personal_info[3]
+            cohort = personal_info[4]
+
+            individual_tuple = (name, house, advisor, cohort)
+            student_list.append(individual_tuple)
+
     # Code goes here
+
+    student_list.sort()
 
     return student_list
 
